@@ -26,6 +26,8 @@ zstyle ":vcs_info:git:*" formats "%F{$YELLOW}(%b)%f"
 # Aliases
 
 alias la="ls -la"
+alias gl="git log --graph"
+alias glo="git log --graph --oneline"
 
 # Paths
 
