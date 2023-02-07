@@ -24,5 +24,7 @@ PS1="$CYAN\W$RESET_COLOR $YELLOW\$(parse_git_branch)$RESET_COLOR $ "
 # Aliases
 
 alias la="ls -la"
+alias gl="git log --graph"
+alias glo="git log --graph --oneline"
 
 # Paths
