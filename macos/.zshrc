@@ -15,13 +15,22 @@ precmd_vcs_info() { vcs_info }
 precmd_functions+=( precmd_vcs_info )
 setopt prompt_subst
 
+# Node
+FILE_NAME="package.json"
+
+get_node_version(){
+	if [[ -f "$FILE_NAME" ]]; then
+		node -v 2> /dev/null | sed 's/\(.*\)/ [Node: \1]/'
+	fi
+}
+
 # Prompt
 
-PS1='%F{$BLUE}%1~%f ${vcs_info_msg_0_} $ '
+PS1='%F{$BLUE}%1~%f${vcs_info_msg_0_}%F{$GREEN}$(get_node_version)%f $ '
 
 # Git info formatting
 
-zstyle ":vcs_info:git:*" formats "%F{$YELLOW}(%b)%f"
+zstyle ":vcs_info:git:*" formats " %F{$YELLOW}(on %b)%f"
 
 # Aliases
 
