@@ -19,7 +19,7 @@ parse_git_branch() {
 
 # Prompt
 
-PS1="$CYAN\W$RESET_COLOR $YELLOW\$(parse_git_branch)$RESET_COLOR $ "
+PS1="$CYAN\W$RESET_COLOR$YELLOW\$(parse_git_branch)$RESET_COLOR $ "
 
 # Aliases
 
