@@ -13,13 +13,31 @@ RESET_COLOR="\[\033[00m\]"
 
 # Git
 
-parse_git_branch() {
-     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+get_git_info(){
+	HAS_GIT="$(git rev-parse --is-inside-work-tree 2>/dev/null)"
+
+	if [[ "$HAS_GIT" == "true" ]]; then
+		GIT_START=" (on "
+		GIT_BRANCH="$(git branch | awk '/^\*/ {print $2}')"
+		GIT_END=")"
+
+		echo "$GIT_START$GIT_BRANCH$GIT_END"
+	fi
+}
+
+# Node
+
+FILE_NAME="package.json"
+
+get_node_version(){
+	if [[ -f "$FILE_NAME" ]]; then
+		node -v 2> /dev/null | awk '{print " [" substr($0, 2) "]"}'
+	fi
 }
 
 # Prompt
 
-PS1="$CYAN\W$RESET_COLOR$YELLOW\$(parse_git_branch)$RESET_COLOR $ "
+PS1="$CYAN\W$RESET_COLOR$YELLOW\$(get_git_info)$RESET_COLOR$GREEN\$(get_node_version)$RESET_COLOR $ "
 
 # Aliases
 
@@ -32,3 +50,5 @@ alias glo="git log --graph --oneline"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+. "$HOME/.cargo/env"
